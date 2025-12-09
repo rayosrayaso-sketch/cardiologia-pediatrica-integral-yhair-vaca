@@ -1,0 +1,14 @@
+.form-section { background: white; border: 1px solid #ddd; }
+.input-titulo { width: 100%; padding: 10px; font-size: 1.1rem; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; }
+.textarea-contenido { width: 100%; padding: 10px; font-family: inherit; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; resize: vertical; }
+.btn-publicar { background: #007bff; color: white; border: none; padding: 10px 20px; font-size: 1rem; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+.btn-publicar:hover { background: #0056b3; }
+
+.grid-articulos { display: grid; gap: 15px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.articulo-admin-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 4px solid #28a745; display: flex; flex-direction: column; justify-content: space-between; }
+.articulo-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.articulo-header h3 { margin: 0; font-size: 1.1rem; color: #333; }
+.fecha-tag { font-size: 0.8rem; color: #888; background: #eee; padding: 2px 6px; border-radius: 4px; }
+.articulo-preview { color: #666; font-size: 0.9rem; line-height: 1.4; margin-bottom: 15px; }
+.btn-delete-art { align-self: flex-end; background: #fff; color: #dc3545; border: 1px solid #dc3545; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+.btn-delete-art:hover { background: #dc3545; color: white; }

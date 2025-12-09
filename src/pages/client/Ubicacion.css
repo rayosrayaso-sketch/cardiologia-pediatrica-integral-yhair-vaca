@@ -1,0 +1,6 @@
+.ubicacion-container { padding: 20px; max-width: 900px; margin: 0 auto; text-align: center; }
+.map-view { border: 4px solid white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; }
+.map-footer { margin-top: 20px; }
+.btn-google-maps { display: inline-block; background: #34a853; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; }
+.btn-google-maps:hover { background: #2c8e45; }
+.no-map { background: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; border: 1px solid #ffeeba; }

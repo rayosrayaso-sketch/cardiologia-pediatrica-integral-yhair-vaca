@@ -1,0 +1,5 @@
+.map-admin-container { padding: 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+.map-wrapper { border: 2px solid #ddd; border-radius: 8px; overflow: hidden; margin: 20px 0; }
+.coords-info { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 10px; }
+.btn-save-map { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+.btn-save-map:hover { background: #0056b3; }

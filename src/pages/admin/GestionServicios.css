@@ -1,0 +1,7 @@
+.admin-container { padding: 20px; max-width: 800px; margin: 0 auto; }
+.card-admin { background: #f4f4f4; padding: 20px; border-radius: 8px; margin-bottom: 20px; color: #333; }
+.form-horario, .form-servicio { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn-save, .btn-add { background: #28a745; color: white; border: none; padding: 10px; cursor: pointer; border-radius: 5px;}
+.grid-servicios { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+.servicio-item { background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px; color: #333; }
+.btn-delete { background: #dc3545; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 4px; width: 100%; margin-top: 10px;}
