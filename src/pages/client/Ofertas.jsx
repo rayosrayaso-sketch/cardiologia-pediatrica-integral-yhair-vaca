@@ -53,8 +53,6 @@ export default function Ofertas() {
   useEffect(() => {
     if (!user) return;
 
-    // IMPORTANTE: Si la consola muestra un error de "requires an index", 
-    // debes hacer clic en el enlace que aparece allí para crearlo en Firebase.
     const q = query(
       collection(db, "citas"), 
       where("userId", "==", user.uid),
@@ -65,7 +63,7 @@ export default function Ofertas() {
       const citasData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
       setMisCitas(citasData);
     }, (error) => {
-      console.error("⚠️ Error obteniendo citas (Posible falta de índice):", error);
+      console.error("⚠️ Error obteniendo citas:", error);
     });
 
     return () => unsubscribe();
@@ -74,7 +72,6 @@ export default function Ofertas() {
   // Función auxiliar para seleccionar servicio y hacer scroll
   const seleccionarServicio = (servicio) => {
     setCita({ ...cita, servicioId: servicio.id, servicioNombre: servicio.nombre });
-    // Scroll suave hacia el formulario
     setTimeout(() => {
       formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
@@ -89,7 +86,7 @@ export default function Ofertas() {
         icon: 'warning', 
         title: 'Inicia sesión', 
         text: 'Debes estar registrado para agendar.',
-        confirmButtonColor: '#007bff'
+        confirmButtonColor: '#0ea5e9'
       }).then(() => navigate("/login"));
     }
 
@@ -98,7 +95,7 @@ export default function Ofertas() {
         icon: 'warning', 
         title: 'Faltan datos', 
         text: 'Selecciona fecha y hora.',
-        confirmButtonColor: '#ffc107'
+        confirmButtonColor: '#f59e0b'
       });
     }
 
@@ -108,7 +105,7 @@ export default function Ofertas() {
           icon: 'error', 
           title: 'Horario no disponible', 
           text: `Atención de ${horario.entrada} a ${horario.salida}.`,
-          confirmButtonColor: '#dc3545'
+          confirmButtonColor: '#ef4444'
         });
       }
     }
@@ -116,7 +113,7 @@ export default function Ofertas() {
     const result = await Swal.fire({
       title: '¿Confirmar reserva?',
       html: `
-        <div style="text-align:left; font-size: 1.1rem">
+        <div style="text-align:left; font-size: 1rem; color: #334155;">
           <p><strong>Servicio:</strong> ${cita.servicioNombre}</p>
           <p><strong>Fecha:</strong> ${cita.fecha}</p>
           <p><strong>Hora:</strong> ${cita.hora}</p>
@@ -126,8 +123,8 @@ export default function Ofertas() {
       showCancelButton: true,
       confirmButtonText: 'Sí, agendar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#6c757d'
+      confirmButtonColor: '#10b981',
+      cancelButtonColor: '#94a3b8'
     });
 
     if (!result.isConfirmed) return;
@@ -147,8 +144,8 @@ export default function Ofertas() {
 
       await Swal.fire({
         icon: 'success',
-        title: '¡Cita Enviada!',
-        text: 'Tu solicitud ha sido enviada y está pendiente de aprobación.',
+        title: '¡Solicitud Enviada!',
+        text: 'Tu cita ha quedado registrada y está en espera de la respuesta del admin.',
         timer: 3000,
         showConfirmButton: false
       });
@@ -168,7 +165,7 @@ export default function Ofertas() {
   const getStatusLabel = (estado) => {
     if (estado === 'confirmada') return 'Confirmada';
     if (estado === 'cancelada') return 'Cancelada';
-    return 'Pendiente';
+    return 'En espera';
   };
 
   const getStatusIcon = (estado) => {
@@ -180,15 +177,15 @@ export default function Ofertas() {
   if (loading) return (
     <div className="loading-container">
       <div className="spinner"></div>
-      <p>Cargando servicios...</p>
+      <p>Cargando servicios médicos...</p>
     </div>
   );
 
   return (
     <div className="ofertas-container fade-in">
       <header className="ofertas-header slide-up">
-        <h1>Oferta de Servicios Médicos</h1>
-        <p>Selecciona un servicio y agenda tu cita.</p>
+        <h1>Agenda tu Salud</h1>
+        <p>Selecciona un servicio profesional y reserva tu horario ideal.</p>
       </header>
 
       {/* Punto de anclaje para el scroll */}
@@ -199,13 +196,14 @@ export default function Ofertas() {
         <div className="reserva-wrapper pop-in">
           <div className="reserva-card">
             <div className="reserva-header">
-              <h3>Reservando: <span className="reserva-servicio">{cita.servicioNombre}</span></h3>
+              <h3>Completar Reserva</h3>
+              <span className="reserva-servicio">{cita.servicioNombre}</span>
             </div>
             
             <form onSubmit={reservarCita} className="reserva-form">
               <div className="form-row">
                 <div className="form-group">
-                  <label>Fecha:</label>
+                  <label>📅 Fecha de Cita</label>
                   <input 
                     type="date" 
                     required 
@@ -215,7 +213,7 @@ export default function Ofertas() {
                   />
                 </div>
                 <div className="form-group">
-                  <label>Hora:</label>
+                  <label>⏰ Hora Preferida</label>
                   <input 
                     type="time" 
                     required 
@@ -230,7 +228,7 @@ export default function Ofertas() {
                   Cancelar
                 </button>
                 <button type="submit" className="btn-confirmar" disabled={isSubmitting}>
-                  {isSubmitting ? <span className="spinner-mini"></span> : 'Confirmar Cita'}
+                  {isSubmitting ? <span className="spinner-mini"></span> : 'Confirmar Reserva'}
                 </button>
               </div>
             </form>
@@ -242,21 +240,31 @@ export default function Ofertas() {
       <div className="servicios-grid">
         {servicios.map((servicio, index) => (
           <div key={servicio.id} className="card-servicio slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
-            <div className="card-icon">🩺</div>
-            <h3>{servicio.nombre}</h3>
-            
-            <div className="card-details">
-              <span className="precio-tag">{servicio.precio} Bs</span>
-              <span className="duracion-tag">⏱ {servicio.duracion} min</span>
+            <div className="card-icon-bg">
+              <span className="card-icon">🩺</span>
             </div>
+            <div className="card-content">
+              <h3>{servicio.nombre}</h3>
+              
+              <div className="card-details">
+                <div className="detail-item">
+                  <span className="label">Precio</span>
+                  <span className="value precio">{servicio.precio} Bs</span>
+                </div>
+                <div className="detail-item">
+                  <span className="label">Duración</span>
+                  <span className="value duracion">{servicio.duracion} min</span>
+                </div>
+              </div>
 
-            <button 
-              className="btn-agendar"
-              onClick={() => seleccionarServicio(servicio)}
-              disabled={isSubmitting}
-            >
-              Agendar Cita
-            </button>
+              <button 
+                className="btn-agendar"
+                onClick={() => seleccionarServicio(servicio)}
+                disabled={isSubmitting}
+              >
+                Reservar Cita
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -265,32 +273,45 @@ export default function Ofertas() {
       {user && (
         <div className="mis-citas-section slide-up delay-2">
           <div className="section-header">
-            <h2>📋 Estado de mis Citas</h2>
-            <div className="divider"></div>
+            <h2>📋 Mis Citas Agendadas</h2>
           </div>
 
           {misCitas.length === 0 ? (
             <div className="no-citas">
-              <p>No has registrado ninguna cita todavía.</p>
-              <small>Tus reservas pendientes y confirmadas aparecerán aquí.</small>
+              <div className="icon-empty">📅</div>
+              <p>No tienes citas programadas.</p>
+              <small>Tus reservas aparecerán aquí para que lleves el control.</small>
             </div>
           ) : (
             <div className="citas-user-grid">
               {misCitas.map(c => (
                 <div key={c.id} className={`cita-user-card status-${c.estado}`}>
-                  <div className="cita-top">
+                  {/* Encabezado de la tarjeta */}
+                  <div className="cita-header-card">
                     <span className="cita-fecha">📅 {c.fecha}</span>
-                    <span className={`badge badge-${c.estado}`}>
+                    <span className={`status-badge badge-${c.estado}`}>
                       {getStatusIcon(c.estado)} {getStatusLabel(c.estado)}
                     </span>
                   </div>
 
-                  <h4 className="cita-servicio-name">{c.servicio}</h4>
-                  <p className="cita-hora">⏰ Hora: <strong>{c.hora}</strong></p>
+                  {/* Cuerpo de la tarjeta */}
+                  <div className="cita-body-card">
+                    <h4 className="cita-servicio-name">{c.servicio}</h4>
+                    <p className="cita-hora">Horario: <strong>{c.hora}</strong></p>
+                  </div>
                   
+                  {/* Mensaje específico para PENDIENTE */}
                   {c.estado === 'pendiente' && (
-                    <div className="footer-pendiente">
-                      <small>Esperando confirmación del doctor...</small>
+                    <div className="cita-footer-pendiente">
+                      <div className="pulse-dot"></div>
+                      <span>Esperando la respuesta del admin en espera</span>
+                    </div>
+                  )}
+                  
+                  {/* Mensaje para CONFIRMADA */}
+                  {c.estado === 'confirmada' && (
+                    <div className="cita-footer-confirmada">
+                      <span>¡Todo listo! Te esperamos.</span>
                     </div>
                   )}
                 </div>
