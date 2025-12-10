@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { db } from "../../firebase/config";
 import { doc, setDoc } from "firebase/firestore";
 import Swal from "sweetalert2";
-import "./Login.css"; // Reutilizamos los mismos estilos
+import "./Login.css"; // Reutilizamos los estilos del Login (Wide Card)
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -65,61 +65,101 @@ export default function Register() {
 
   return (
     <div className="login-container">
-      <div className="login-card">
-        <h2>Crear Cuenta</h2>
-        <span className="subtitle">Regístrate para agendar tus citas médicas</span>
+      {/* Usamos la misma estructura de tarjeta ancha que en el Login */}
+      <div className="login-card-wide fade-in-up">
         
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>Nombre Completo</label>
-            <input 
-              type="text" 
-              placeholder="Ej. Juan Pérez"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              required 
-            />
+        {/* SECCIÓN IZQUIERDA: BRANDING MÉDICO (Idéntico al Login para consistencia) */}
+        <div className="login-branding">
+          <div className="heart-icon-wrapper">
+            <span className="heart-icon">❤️</span>
           </div>
-          <div className="form-group">
-            <label>Teléfono / Celular</label>
-            <input 
-              type="tel" 
-              placeholder="Ej. 70123456"
-              value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
-              required 
-            />
-          </div>
-          <div className="form-group">
-            <label>Correo Electrónico</label>
-            <input 
-              type="email" 
-              placeholder="tu@correo.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required 
-            />
-          </div>
-          <div className="form-group">
-            <label>Contraseña</label>
-            <input 
-              type="password" 
-              placeholder="Crea una contraseña segura"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required 
-            />
+          <h1>PerfilMed</h1>
+          <p className="branding-subtitle">Dra. Alexander Yhair Vaca Saldaña</p>
+          <div className="branding-divider"></div>
+          <p className="branding-desc">
+            Únete a nuestra comunidad de pacientes y lleva el control de tu salud cardiovascular con la mejor atención.
+          </p>
+        </div>
+
+        {/* SECCIÓN DERECHA: FORMULARIO DE REGISTRO */}
+        <div className="login-form-wrapper">
+          <div className="form-header">
+            <h2>Crear Cuenta</h2>
+            <span className="subtitle">Completa tus datos para agendar citas</span>
           </div>
           
-          <button type="submit" className="btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? <div className="spinner"></div> : "Registrarse"}
-          </button>
-        </form>
+          <form onSubmit={handleSubmit} className="login-form">
+            
+            {/* Campo Nombre */}
+            <div className="form-group slide-in-right delay-1">
+              <label>Nombre Completo</label>
+              <div className="input-with-icon">
+                <span className="input-icon"></span>
+                <input 
+                  type="text" 
+                  placeholder="Ej. Juan Pérez"
+                  value={nombre}
+                  onChange={(e) => setNombre(e.target.value)}
+                  required 
+                />
+              </div>
+            </div>
 
-        <p className="toggle-text">
-          ¿Ya tienes cuenta?
-          <Link to="/login" className="btn-link">Inicia sesión aquí</Link>
-        </p>
+            {/* Campo Teléfono */}
+            <div className="form-group slide-in-right delay-1">
+              <label>Teléfono / Celular</label>
+              <div className="input-with-icon">
+                <span className="input-icon"></span>
+                <input 
+                  type="tel" 
+                  placeholder="Ej. 70123456"
+                  value={telefono}
+                  onChange={(e) => setTelefono(e.target.value)}
+                  required 
+                />
+              </div>
+            </div>
+
+            {/* Campo Email */}
+            <div className="form-group slide-in-right delay-2">
+              <label>Correo Electrónico</label>
+              <div className="input-with-icon">
+                <span className="input-icon"></span>
+                <input 
+                  type="email" 
+                  placeholder="tu@correo.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required 
+                />
+              </div>
+            </div>
+
+            {/* Campo Contraseña */}
+            <div className="form-group slide-in-right delay-2">
+              <label>Contraseña</label>
+              <div className="input-with-icon">
+                <span className="input-icon"></span>
+                <input 
+                  type="password" 
+                  placeholder="Crea una contraseña segura"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required 
+                />
+              </div>
+            </div>
+            
+            <button type="submit" className="btn-primary-cardio pulse-on-hover" disabled={isSubmitting}>
+              {isSubmitting ? <div className="spinner"></div> : "Registrarse"}
+            </button>
+          </form>
+
+          <p className="toggle-text slide-in-right delay-3">
+            ¿Ya tienes cuenta?
+            <Link to="/login" className="btn-link-cardio">Inicia sesión aquí</Link>
+          </p>
+        </div>
       </div>
     </div>
   );

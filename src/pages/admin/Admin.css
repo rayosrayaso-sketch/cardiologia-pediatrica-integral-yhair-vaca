@@ -1,38 +1,365 @@
+/* =========================================
+   VARIABLES GLOBALES (ADMIN THEME - CARDIOLOGÍA)
+   ========================================= */
+:root {
+  --primary-blue: #007bff;       /* Azul Médico Principal */
+  --primary-dark: #0056b3;       /* Azul Oscuro para hover */
+  --accent-coral: #ff4757;       /* Rojo/Coral (Urgencia/Acento) */
+  --bg-admin: #f4f7f6;           /* Fondo gris muy suave y limpio */
+  --white: #ffffff;
+  --text-dark: #2c3e50;          /* Azul oscuro para textos */
+  --text-gray: #7f8c8d;          /* Gris para textos secundarios */
+  --border-light: #e0e0e0;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --shadow-card: 0 4px 6px rgba(0,0,0,0.04);
+  --shadow-hover: 0 10px 20px rgba(0,0,0,0.08);
+  --radius: 12px;
+}
+
+/* --- CONTENEDOR PRINCIPAL (FIX NAVBAR) --- */
 .admin-container { 
-  padding: 20px; 
+  /* ¡ESTA ES LA SOLUCIÓN! */
+  /* 100px arriba para empujar el contenido debajo del Navbar */
+  padding: 100px 20px 40px; 
+  
   max-width: 1200px; 
   margin: 0 auto; 
   width: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
+  background-color: var(--bg-admin);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-h1 { 
-  color: #007bff; 
-  margin-bottom: 10px;
+/* --- HEADER DEL DASHBOARD --- */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+  background: var(--white);
+  padding: 25px 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  border-left: 5px solid var(--primary-blue); /* Detalle de color */
 }
 
-/* Stats Grid Responsive */
+.dashboard-header h1 { 
+  color: var(--primary-blue); 
+  font-size: 1.8rem;
+  margin: 0 0 5px 0;
+  font-weight: 700;
+}
+
+.dashboard-header p {
+  color: var(--text-gray);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.date-badge {
+  background: #eef2f7;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  border: 1px solid #dce4ec;
+}
+
+/* =========================================
+   STATS GRID (WIDGETS)
+   ========================================= */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Tarjetas flexibles */
-  gap: 20px;
-  margin: 30px 0;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive */
+  gap: 25px;
+  margin-bottom: 40px;
 }
 
 .stat-card {
-  background: white;
+  background: var(--white);
   padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  text-align: center;
-  transition: transform 0.2s;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.03);
+  overflow: hidden;
 }
 
+/* Efecto Hover Elevado */
 .stat-card:hover {
   transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
 }
 
-/* Listas de Citas */
+/* Colores laterales para identificar secciones */
+.stat-card.urgent { border-top: 4px solid var(--warning); }   /* Citas pendientes */
+.stat-card.info { border-top: 4px solid var(--primary-blue); } /* Servicios */
+.stat-card.location { border-top: 4px solid #e83e8c; }       /* Ubicación (Rosa) */
+.stat-card.blog { border-top: 4px solid #6f42c1; }           /* Blog (Morado) */
+.stat-card.profile { border-top: 4px solid var(--success); }  /* Perfil (Verde) */
+.stat-card.contact { border-top: 4px solid var(--accent-coral); } /* Contacto (Rojo) */
+
+.stat-icon-bg {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  background: #f8f9fa;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px; /* Icono cuadrado redondeado */
+}
+
+.stat-info h2 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--text-dark);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.stat-info h3 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.stat-info p {
+  color: var(--text-gray);
+  margin: 5px 0 20px 0;
+  font-size: 0.95rem;
+}
+
+.stat-link {
+  margin-top: auto;
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat-link:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* =========================================
+   SECCIÓN CITAS RECIENTES (TABLA)
+   ========================================= */
+.citas-recientes-section {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 15px;
+}
+
+.section-header h2 {
+  font-size: 1.4rem;
+  color: var(--text-dark);
+  margin: 0;
+  font-weight: 700;
+}
+
+.link-ver-todas {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.link-ver-todas:hover {
+  background: #eef2f7;
+}
+
+.citas-list-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Item de Cita Reciente */
+.cita-reciente-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  border-radius: 10px;
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  transition: all 0.2s;
+}
+
+.cita-reciente-item:hover {
+  border-color: var(--primary-blue);
+  background: #fdfdfd;
+  transform: translateX(5px);
+}
+
+.cita-main-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cita-main-info strong {
+  color: var(--text-dark);
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.cita-email {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.cita-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.cita-date {
+  font-size: 0.85rem;
+  color: var(--text-gray);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Badges de Estado Modernos */
+.cita-status-badge {
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-pendiente { 
+  background: #fff8e1; 
+  color: #f59e0b; 
+  border: 1px solid #ffe082; 
+}
+.status-confirmada { 
+  background: #e8f5e9; 
+  color: #2e7d32; 
+  border: 1px solid #a5d6a7; 
+}
+.status-cancelada { 
+  background: #ffebee; 
+  color: #c62828; 
+  border: 1px solid #ef9a9a; 
+}
+
+.empty-dashboard-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-gray);
+  font-style: italic;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+/* =========================================
+   ESTILOS GENERALES (Para otras vistas del admin)
+   ========================================= */
+
+/* Estilos de Tarjeta Formulario (Admin Genérico) */
+.card-admin {
+  background: var(--white);
+  padding: 35px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 25px;
+}
+
+.form-curriculum { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 20px; 
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.input-admin, .textarea-admin { 
+  width: 100%; 
+  padding: 12px 15px; 
+  border: 1px solid var(--border-light); 
+  border-radius: 8px; 
+  font-size: 1rem; 
+  background: #fdfdfd;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-admin:focus, .textarea-admin:focus {
+  border-color: var(--primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+  background: var(--white);
+}
+
+.textarea-admin { resize: vertical; }
+
+.btn-save-map, .btn-ver-cv {
+  background: var(--success);
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 50px; /* Botón píldora */
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);
+}
+
+.btn-save-map:hover { 
+  background: #218838; 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Listas de Citas (Vista Completa) */
+.admin-table-wrapper {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--shadow-card);
+}
+
 .citas-list {
   display: flex;
   flex-direction: column;
@@ -40,152 +367,102 @@ h1 {
 }
 
 .cita-item {
-  background: white;
+  background: var(--white);
   padding: 20px;
-  border-left: 5px solid #007bff;
+  border-left: 5px solid var(--primary-blue);
+  border: 1px solid var(--border-light);
   border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Importante para móviles */
-  gap: 15px;
+  flex-wrap: wrap;
+  transition: transform 0.2s;
 }
 
-/* Ajustes para móviles en Admin */
-@media (max-width: 600px) {
-  .cita-item {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .cita-actions {
-    width: 100%;
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  .cita-actions button {
-    flex: 1;
-    margin-left: 0;
-  }
+.cita-item:hover {
+  transform: translateX(5px);
+  box-shadow: var(--shadow-card);
 }
 
-/* Soporte Dark Mode Básico */
-@media (prefers-color-scheme: dark) {
-  .stat-card, .cita-item, .cita-reciente-item {
-    background: #2a2a2a;
-    color: #fff;
-  }
-  .stat-card p, .cita-item p {
-    color: #ccc;
-  }
-}
-/* Agrega estos estilos a src/pages/admin/Admin.css */
-
-.btn-eliminar {
-    background-color: #dc3545; /* Rojo */
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-eliminar:hover {
-    background-color: #c82333; /* Rojo más oscuro */
-}
-
-/* Ajuste para que los botones estén juntos */
 .cita-actions {
-    display: flex;
-    gap: 5px; /* Espacio entre botones */
-    margin-top: 10px;
-}
-/* --- Estilos para GestionCurriculum.jsx --- */
-
-.card-admin {
-    background: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.form-curriculum { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 20px; 
-}
+button { cursor: pointer; }
 
-.input-admin, .textarea-admin { 
-    width: 100%; 
-    padding: 12px; 
-    border: 1px solid #ccc; 
-    border-radius: 8px; 
-    font-size: 1rem; 
-}
-.textarea-admin {
-    resize: vertical;
-}
+/* Botones de acción específicos */
+.btn-confirmar { background: var(--success); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; border: none; transition: 0.2s; }
+.btn-cancelar { background: #f1f3f5; color: var(--text-dark); padding: 8px 16px; border-radius: 6px; font-weight: 600; border: 1px solid #ced4da; transition: 0.2s; }
+.btn-eliminar { background: var(--danger); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; border: none; transition: 0.2s; }
 
-.form-group label { 
-    display: block; 
-    margin-bottom: 8px; 
-    font-weight: bold; 
-    color: #333; 
-}
-.form-group small { 
-    color: #666; 
-    display: block; 
-    margin-top: 5px; 
-    font-size: 0.85rem;
-}
+.btn-confirmar:hover { background: #1e7e34; }
+.btn-cancelar:hover { background: #e9ecef; }
+.btn-eliminar:hover { background: #bd2130; }
 
-.preview-section {
-    padding: 20px;
-    border-top: 1px solid #eee;
-    text-align: center;
-}
-
-.btn-ver-cv {
-  display: inline-block; 
-  background: #6c757d; /* Gris */
-  color: white; 
-  padding: 10px 20px;
-  text-decoration: none; 
-  border-radius: 5px; 
-  font-weight: 600;
-  transition: background-color 0.2s;
-}
-
-.btn-ver-cv:hover { 
-    background: #5a6268; 
-}
-/* --- Estilos para la previsualización de la foto en Admin --- */
+/* Preview de Foto */
 .foto-preview-container {
-    text-align: center;
-    margin-bottom: 20px;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    border: 1px dashed #ccc;
-}
-
-.foto-preview-container p {
-    margin: 0 0 10px 0;
-    font-size: 0.9rem;
-    color: #666;
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 2px dashed var(--border-light);
 }
 
 .foto-preview {
-    width: 150px;
-    height: 150px;
-    object-fit: cover; /* Asegura que la imagen no se deforme */
-    border-radius: 50%; /* Hace la imagen redonda */
-    border: 3px solid #007bff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--white);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Loading */
+.loading-admin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--primary-blue);
+  background: var(--bg-admin);
+}
+
+.spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid var(--primary-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+/* Animaciones */
+.fade-in { animation: fadeIn 0.6s ease-out; }
+.slide-up { animation: slideUp 0.6s ease-out; }
+.delay-1 { animation-delay: 0.1s; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* Responsive Mobile */
+@media (max-width: 600px) {
+  .admin-container {
+    padding-top: 110px; /* Un poco más de espacio en móviles si el navbar crece */
+  }
+  
+  .dashboard-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+  
+  .cita-reciente-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .cita-meta { align-items: flex-start; text-align: left; width: 100%; }
+  
+  .cita-item { flex-direction: column; align-items: flex-start; }
+  .cita-actions { width: 100%; flex-wrap: wrap; }
+  .cita-actions button { flex: 1; margin: 0; }
 }

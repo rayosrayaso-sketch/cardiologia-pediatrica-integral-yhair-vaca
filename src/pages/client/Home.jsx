@@ -27,15 +27,16 @@ export default function Home() {
       {/* SECCIÓN HERO (Principal) */}
       <header className="hero-section">
         <div className="hero-content">
-          <h1 className="title-animate">Dra. Victoria Calizaya</h1>
-          <p className="fade-up-delay-1">Especialista en Medicina General y Atención Integral.</p>
+          {/* Título principal con el nombre completo */}
+          <h1 className="title-animate">Dr. Alexander Yhair Vaca Saldaña</h1>
+          <p className="fade-up-delay-1 hero-specialty">Especialista en Cardiología Pediátrica Integral.</p>
           
           <div className="hero-buttons fade-up-delay-2">
             <Link to="/ofertas" className="btn-hero primary">
-              📅 Agendar Cita
+              <span role="img" aria-label="Calendario">📅</span> Agendar Cita
             </Link>
             <Link to="/ubicacion" className="btn-hero secondary">
-              📍 Ver Ubicación
+              <span role="img" aria-label="Ubicación">📍</span> Ver Ubicación
             </Link>
           </div>
         </div>
@@ -43,30 +44,30 @@ export default function Home() {
 
       {/* SECCIÓN DE BIENVENIDA */}
       <section className="welcome-section fade-up-delay-3">
-        <h2>Tu salud es nuestra prioridad</h2>
+        <h2 className="welcome-title">Cuidado Especializado para el Corazón de tu Niño</h2>
         <p>
-          En el consultorio de la Dra. Victoria Calizaya, nos dedicamos a brindar 
-          atención médica de calidad con un enfoque humano y personalizado. 
-          Contamos con instalaciones modernas y un compromiso total con tu bienestar.
+          El Dr. Alexander Yhair Vaca Saldaña ofrece una atención integral y humanizada en cardiología pediátrica. 
+          Nuestro compromiso es con el bienestar cardiovascular de sus hijos, brindando diagnósticos precisos 
+          y tratamientos con la tecnología más avanzada en un ambiente de total confianza.
         </p>
       </section>
 
       {/* SECCIÓN DE SERVICIOS RÁPIDOS */}
       <section className="features-section">
         <div className="feature-card hover-card">
-          <div className="icon">🩺</div>
-          <h3>Diagnóstico Preciso</h3>
-          <p>Evaluación médica completa con tecnología adecuada.</p>
+          <div className="icon heart-pulse">❤️</div>
+          <h3>Cardiología Pediátrica</h3>
+          <p>Diagnóstico y manejo de cardiopatías congénitas y adquiridas en niños y adolescentes.</p>
         </div>
         <div className="feature-card hover-card">
-          <div className="icon">💊</div>
-          <h3>Tratamiento Efectivo</h3>
-          <p>Planes de recuperación adaptados a cada paciente.</p>
+          <div className="icon stethoscope">🩺</div>
+          <h3>Ecocardiografía Avanzada</h3>
+          <p>Estudios no invasivos de alta resolución para evaluar la estructura y función cardíaca.</p>
         </div>
         <div className="feature-card hover-card">
-          <div className="icon">📅</div>
-          <h3>Agenda Flexible</h3>
-          <p>Horarios de atención de Lunes a Sábado.</p>
+          <div className="icon calendar">📅</div>
+          <h3>Consulta Integral</h3>
+          <p>Evaluación, seguimiento y educación para padres sobre la salud cardiovascular infantil.</p>
         </div>
       </section>
     </div>

@@ -41,68 +41,117 @@ export default function AdminDashboard() {
     return 'status-pendiente';
   };
 
-  if (loading) return <div className="loading-admin">Cargando Dashboard...</div>;
+  if (loading) return (
+    <div className="loading-admin">
+      <div className="spinner"></div>
+      <p>Cargando Panel de Control...</p>
+    </div>
+  );
 
   return (
-    <div className="admin-container">
-      <h1>Panel de Administración 🧑‍💻</h1>
-      <p>Bienvenido, Administrador. Gestiona tu perfil médico.</p>
+    <div className="admin-container fade-in">
+      <header className="dashboard-header">
+        <div>
+          <h1>Cardiología Pediátrica Integral</h1>
+          <p>Panel de Administración. Resumen de actividad reciente.</p>
+        </div>
+        <div className="date-badge">
+          {new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}
+        </div>
+      </header>
 
-      {/* Tarjetas de Estadísticas */}
+      {/* Tarjetas de Estadísticas (Widgets) */}
       <div className="stats-grid">
-        <div className="stat-card">
-          <h2>{stats.citasPendientes}</h2>
-          <p>Citas Pendientes</p>
-          <Link to="/admin/citas">Ver Citas</Link>
+        
+        {/* Widget: Citas Pendientes */}
+        <div className="stat-card urgent">
+          <div className="stat-icon-bg">🔔</div>
+          <div className="stat-info">
+            <h2>{stats.citasPendientes}</h2>
+            <p>Citas Pendientes</p>
+          </div>
+          <Link to="/admin/citas" className="stat-link">Revisar Ahora →</Link>
         </div>
-        <div className="stat-card">
-          <h2>{stats.totalServicios}</h2>
-          <p>Servicios Registrados</p>
-          <Link to="/admin/servicios">Gestionar Servicios</Link>
+
+        {/* Widget: Servicios */}
+        <div className="stat-card info">
+          <div className="stat-icon-bg">🩺</div>
+          <div className="stat-info">
+            <h2>{stats.totalServicios}</h2>
+            <p>Servicios Activos</p>
+          </div>
+          <Link to="/admin/servicios" className="stat-link">Gestionar →</Link>
         </div>
-        <div className="stat-card">
-          <h2>Ubicación</h2>
-          <p>Mapa de la Oficina</p>
-          <Link to="/admin/ubicacion">Actualizar Ubicación</Link>
+
+        {/* Widget: Ubicación */}
+        <div className="stat-card location">
+          <div className="stat-icon-bg">📍</div>
+          <div className="stat-info">
+            <h3>Ubicación</h3>
+            <p>Mapa Consultorio</p>
+          </div>
+          <Link to="/admin/ubicacion" className="stat-link">Actualizar →</Link>
         </div>
-        <div className="stat-card">
-          <h2>Blog</h2>
-          <p>Artículos de Investigación</p>
-          <Link to="/admin/investigacion">Gestionar Blog</Link>
+
+        {/* Widget: Blog */}
+        <div className="stat-card blog">
+          <div className="stat-icon-bg">📰</div>
+          <div className="stat-info">
+            <h3>Blog Médico</h3>
+            <p>Publicaciones</p>
+          </div>
+          <Link to="/admin/investigacion" className="stat-link">Editar →</Link>
         </div>
-        <div className="stat-card">
-          <h2>CV</h2>
-          <p>Perfil Profesional</p>
-          <Link to="/admin/curriculum">Gestionar Currículum</Link>
+
+        {/* Widget: CV */}
+        <div className="stat-card profile">
+          <div className="stat-icon-bg">👨‍⚕️</div>
+          <div className="stat-info">
+            <h3>Perfil Pro</h3>
+            <p>Currículum</p>
+          </div>
+          <Link to="/admin/curriculum" className="stat-link">Editar →</Link>
         </div>
-        {/* <--- NUEVA TARJETA DE ACCESO RÁPIDO PARA CONTACTOS --- */}
-        <div className="stat-card">
-          <h2>📞</h2>
-          <p>Información de Contacto</p>
-          <Link to="/admin/contactos">Gestionar Contactos</Link>
+
+        {/* Widget: Contactos */}
+        <div className="stat-card contact">
+          <div className="stat-icon-bg">📞</div>
+          <div className="stat-info">
+            <h3>Contacto</h3>
+            <p>Info Pública</p>
+          </div>
+          <Link to="/admin/contactos" className="stat-link">Editar →</Link>
         </div>
-        {/* ----------------------------------------------------- */}
       </div>
       
-      {/* Citas Recientes */}
-      <section className="citas-recientes-section">
-        <h2>Últimas Citas Registradas</h2>
+      {/* Sección: Citas Recientes */}
+      <section className="citas-recientes-section slide-up delay-1">
+        <div className="section-header">
+          <h2>📅 Actividad Reciente</h2>
+          <Link to="/admin/citas" className="link-ver-todas">Ver todas las citas</Link>
+        </div>
+
         {citasRecientes.length === 0 ? (
-          <p>No hay citas recientes.</p>
+          <div className="empty-dashboard-state">
+            <p>No hay actividad reciente para mostrar.</p>
+          </div>
         ) : (
-          <>
-            <div className="citas-list-dashboard">
-              {citasRecientes.map(cita => (
-                <div key={cita.id} className="cita-reciente-item">
-                  <p><strong>{cita.servicio}</strong></p>
-                  <p>{cita.fecha} | {cita.hora}</p>
-                  <span className={`cita-status ${getEstadoClass(cita.estado)}`}>{cita.estado.toUpperCase()}</span>
-                  <p className="cita-email">{cita.userEmail}</p>
+          <div className="citas-list-dashboard">
+            {citasRecientes.map(cita => (
+              <div key={cita.id} className="cita-reciente-item">
+                <div className="cita-main-info">
+                  <strong>{cita.servicio}</strong>
+                  <span className="cita-email">{cita.userEmail}</span>
                 </div>
-              ))}
-            </div>
-            <Link to="/admin/citas" className="btn-ver-mas">Ver todas las citas →</Link>
-          </>
+                <div className="cita-meta">
+                  <span className="cita-date">{cita.fecha} - {cita.hora}</span>
+                  <span className={`cita-status-badge ${getEstadoClass(cita.estado)}`}>
+                    {cita.estado}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
       </section>
     </div>

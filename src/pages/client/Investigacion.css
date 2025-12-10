@@ -1,32 +1,248 @@
-.blog-container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-.blog-header { text-align: center; margin-bottom: 40px; }
-.blog-header h1 { font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px; }
-.blog-header p { color: #7f8c8d; font-size: 1.1rem; }
-
-.blog-grid { display: flex; flex-direction: column; gap: 30px; }
-
-.blog-card { 
-  background: white; 
-  border-radius: 12px; 
-  overflow: hidden; 
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
-  transition: transform 0.3s ease;
-  border-left: 6px solid #3498db;
+/* Variables de Diseño (Tema Médico Profesional) */
+:root {
+  --primary-color: #007bff;
+  --primary-dark: #0056b3;
+  --accent-color: #ff4757;
+  --bg-light: #f5f8fb;
+  --card-bg: #ffffff;
+  --text-main: #2c3e50;
+  --text-light: #607d8b;
+  --border-color: #eef2f6;
 }
-.blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
 
-.blog-content { padding: 30px; }
-.blog-date { 
-  display: inline-block; 
-  background: #e1f5fe; 
-  color: #0288d1; 
-  padding: 5px 12px; 
-  border-radius: 20px; 
-  font-size: 0.85rem; 
-  font-weight: 600; 
-  margin-bottom: 15px; 
+/* Contenedor Principal */
+.blog-container {
+  /* Espacio superior para compensar el Navbar fijo */
+  padding: 120px 20px 60px;
+  
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: var(--bg-light);
+  font-family: 'Inter', system-ui, sans-serif;
+  box-sizing: border-box;
 }
-.blog-content h2 { margin: 0 0 15px 0; color: #2c3e50; font-size: 1.5rem; }
-.blog-content p { color: #555; line-height: 1.7; white-space: pre-wrap; /* Mantiene saltos de línea */ }
 
-.empty-state { text-align: center; padding: 50px; background: #f9f9f9; border-radius: 10px; color: #888; }
+/* Header de la sección */
+.blog-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.blog-subtitle {
+  color: var(--accent-color);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.blog-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-main);
+  margin: 0 0 15px 0;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.blog-header p {
+  color: var(--text-light);
+  font-size: 1.15rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.header-line {
+  width: 60px;
+  height: 4px;
+  background-color: var(--primary-color);
+  margin: 25px auto 0;
+  border-radius: 2px;
+}
+
+/* Grid de Artículos */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 30px;
+}
+
+/* Tarjeta de Artículo */
+.blog-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.blog-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.12);
+}
+
+/* Decoración superior de la tarjeta */
+.card-top-accent {
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-color), #00d2ff);
+  width: 100%;
+}
+
+.blog-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Metadatos (Fecha y Tag) */
+.meta-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.blog-date {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  font-weight: 600;
+  background-color: #f1f5f9;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.blog-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Título del artículo */
+.blog-content h2 {
+  margin: 0 0 15px 0;
+  color: var(--text-main);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.blog-card:hover h2 {
+  color: var(--primary-color);
+}
+
+/* Cuerpo del contenido */
+.content-body {
+  margin-bottom: 25px;
+  flex-grow: 1;
+}
+
+.content-body p {
+  color: var(--text-light);
+  line-height: 1.7;
+  font-size: 1rem;
+  white-space: pre-wrap; /* Mantiene párrafos */
+  
+  /* Truncado elegante de texto largo (opcional visualmente) */
+  display: -webkit-box;
+  -webkit-line-clamp: 6; /* Muestra máximo 6 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Footer de la tarjeta */
+.card-footer {
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.read-more {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: padding-left 0.2s;
+}
+
+.blog-card:hover .read-more {
+  padding-left: 5px; /* Pequeña animación al hacer hover */
+}
+
+/* Estado Vacío */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 16px;
+  border: 2px dashed var(--border-color);
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.6;
+}
+
+/* Loading */
+.loading-blog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--primary-color);
+}
+
+.spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid #e0f2fe;
+  border-top: 4px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Animaciones */
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.slide-up { opacity: 0; animation: slideUp 0.8s ease-out forwards; }
+.delay-1 { animation-delay: 0.2s; }
+
+@keyframes fadeIn { to { opacity: 1; } }
+@keyframes slideUp { 
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .blog-container {
+    padding-top: 100px;
+  }
+  
+  .blog-header h1 {
+    font-size: 2rem;
+  }
+  
+  .blog-grid {
+    grid-template-columns: 1fr; /* Una columna en móvil */
+  }
+}

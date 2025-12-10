@@ -24,27 +24,49 @@ export default function Investigacion() {
     fetchNoticias();
   }, []);
 
-  if (loading) return <div className="loading-blog">Cargando investigaciones...</div>;
+  if (loading) return (
+    <div className="loading-blog">
+      <div className="spinner"></div>
+      <p>Cargando artículos...</p>
+    </div>
+  );
 
   return (
-    <div className="blog-container">
-      <header className="blog-header">
-        <h1>🔬 Investigación y Noticias Médicas</h1>
-        <p>Mantente informado con los últimos avances y consejos de salud.</p>
+    <div className="blog-container fade-in">
+      <header className="blog-header slide-up">
+        <span className="blog-subtitle">Actualidad Médica</span>
+        <h1>🔬 Investigación y Noticias</h1>
+        <p>Mantente informado con los últimos avances en cardiología pediátrica y consejos de salud.</p>
+        <div className="header-line"></div>
       </header>
 
       {articulos.length === 0 ? (
-        <div className="empty-state">
-          <p>Aún no hay artículos publicados. Vuelve pronto.</p>
+        <div className="empty-state slide-up delay-1">
+          <div className="empty-icon">📭</div>
+          <p>Aún no hay artículos publicados. Vuelve pronto para leer novedades.</p>
         </div>
       ) : (
-        <div className="blog-grid">
+        <div className="blog-grid slide-up delay-1">
           {articulos.map((articulo) => (
             <article key={articulo.id} className="blog-card">
+              <div className="card-top-accent"></div>
               <div className="blog-content">
-                <span className="blog-date">{articulo.fechaLegible || "Reciente"}</span>
+                <div className="meta-info">
+                  <span className="blog-date">
+                    📅 {articulo.fechaLegible || "Reciente"}
+                  </span>
+                  <span className="blog-tag">Medicina</span>
+                </div>
+                
                 <h2>{articulo.titulo}</h2>
-                <p>{articulo.contenido}</p>
+                
+                <div className="content-body">
+                  <p>{articulo.contenido}</p>
+                </div>
+                
+                <div className="card-footer">
+                  <span className="read-more">Leer publicación completa →</span>
+                </div>
               </div>
             </article>
           ))}

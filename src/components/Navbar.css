@@ -1,72 +1,307 @@
-.navbar {
-  background-color: #007bff; /* Color azul primario */
-  color: white;
+/* Barra Superior Fija */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 280px;
+  right: 0;
+  height: 70px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0 30px;
+  z-index: 999;
+  transition: left 0.3s ease;
+}
+
+.top-bar.sidebar-collapsed {
+  left: 80px;
+}
+
+.top-bar-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
+.sidebar-toggle-desktop {
+  background: none;
+  border: none;
+  color: #2563eb;
+  cursor: pointer;
+  padding: 8px;
+  margin-right: 20px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-toggle-desktop:hover {
+  background-color: #f3f4f6;
+}
+
+/* Navbar Principal - Diseño moderno en la parte izquierda */
+.navbar {
+  background-color: #ffffff;
+  color: #333;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  border-right: 1px solid #e5e7eb;
+  width: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+}
+
+.navbar.collapsed {
+  width: 80px;
+}
+
+.navbar-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+}
+
+/* Logo - Diseño moderno con icono */
+.logo {
+  padding: 24px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  min-height: 88px;
+  display: flex;
+  align-items: center;
 }
 
 .logo a {
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   text-decoration: none;
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2563eb;
+  transition: opacity 0.3s;
+  width: 100%;
 }
 
+.logo a:hover {
+  opacity: 0.8;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+  white-space: normal;
+  overflow: hidden;
+  transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.navbar.collapsed .logo-text {
+  opacity: 0;
+  width: 0;
+}
+
+/* Nav Links - Menú vertical en la barra lateral */
 .nav-links {
   list-style: none;
-  display: flex; /* Horizontal por defecto */
+  display: flex;
+  flex-direction: column;
   margin: 0;
-  padding: 0;
-  align-items: center;
-  transition: transform 0.3s ease-out; /* Transición para móvil */
+  padding: 20px 0;
+  gap: 4px;
+  flex: 1;
 }
 
 .nav-links li {
-  margin-left: 25px;
+  margin: 0;
+  padding: 0 12px;
 }
 
-.nav-links a, .nav-links button {
-  color: white;
+.nav-links a {
+  color: #4b5563;
   text-decoration: none;
-  font-size: 1rem;
-  padding: 8px 10px;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
 }
 
 .nav-links a:hover {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: #f3f4f6;
+  color: #2563eb;
+}
+
+.nav-links a svg {
+  flex-shrink: 0;
+}
+
+.navbar.collapsed .nav-links a span {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+.navbar.collapsed .nav-links a {
+  justify-content: center;
+  padding: 12px;
+}
+
+/* Botón de Cerrar Sesión - Estilo destacado */
+.logout-item {
+  margin-top: auto;
+  padding: 0 12px 20px;
 }
 
 .btn-logout {
-  background-color: #dc3545; /* Rojo para cerrar sesión */
+  background-color: #2563eb;
+  color: white;
   border: none;
   cursor: pointer;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-logout:hover {
-  background-color: #c82333;
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
 }
 
-/* Botón de Hamburguesa - Oculto por defecto en desktop */
+.btn-logout:active {
+  transform: translateY(0);
+}
+
+/* Botón Hamburguesa - Oculto por defecto en desktop */
 .menu-toggle {
   display: none;
   background: none;
   border: none;
-  color: white;
-  font-size: 1.8rem;
   cursor: pointer;
-  z-index: 1001; /* Asegura que esté por encima del menú colapsado */
+  padding: 8px;
+  z-index: 1001;
 }
 
-/* --- Media Query para Dispositivos Móviles (pantallas pequeñas) --- */
+/* Hamburguesa animada - 3 líneas */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 26px;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  background-color: #2563eb;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Animación del hamburguesa cuando está abierto */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Ajuste para el contenido principal cuando el navbar está a la izquierda */
+@media (min-width: 901px) {
+  body {
+    margin-left: 280px;
+    margin-top: 70px;
+    transition: margin-left 0.3s ease, margin-top 0.3s ease;
+  }
+  
+  body.sidebar-collapsed {
+    margin-left: 80px;
+  }
+}
+
+/* --- Media Query para Tablets y Móviles --- */
 @media (max-width: 900px) {
+  /* Ocultar barra superior en móvil */
+  .top-bar {
+    display: none;
+  }
+
+  /* En móvil, el navbar vuelve a estar arriba */
   .navbar {
-    padding: 10px 20px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-right: none;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .navbar.collapsed {
+    width: 100%;
+  }
+
+  .navbar-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+  }
+
+  .logo {
+    padding: 0;
+    border-bottom: none;
+    min-height: auto;
+  }
+
+  .logo a {
+    font-size: 0.95rem;
+    gap: 8px;
+  }
+
+  .logo-icon {
+    font-size: 1.4rem;
+  }
+
+  .logo-text {
+    opacity: 1 !important;
+    width: auto !important;
   }
   
   /* Mostrar el botón de hamburguesa */
@@ -74,39 +309,85 @@
     display: block;
   }
 
-  /* Ocultar la lista de enlaces por defecto */
+  /* Menú desplegable en móvil */
   .nav-links {
-    display: none; /* Oculto por defecto */
-    flex-direction: column; /* Vertical en móvil */
-    position: absolute;
-    top: 60px; /* Debajo de la navbar */
+    display: none;
+    position: fixed;
+    top: 60px;
     left: 0;
+    right: 0;
     width: 100%;
-    background-color: #007bff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    gap: 0;
+    padding: 8px 0;
   }
 
-  /* Clase para mostrar la lista de enlaces cuando el estado está abierto */
+  /* Mostrar menú cuando está abierto */
   .nav-links.open {
     display: flex;
   }
 
   .nav-links li {
-    margin: 0;
     width: 100%;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #f3f4f6;
+    padding: 0;
   }
 
-  .nav-links li:first-child {
-    border-top: none;
+  .nav-links li:last-child {
+    border-bottom: none;
   }
   
-  .nav-links a, .nav-links button {
-    display: block; /* Ocupa todo el ancho del ítem */
+  .nav-links a {
     width: 100%;
-    padding: 15px 20px;
-    text-align: left;
+    padding: 16px 24px !important;
     border-radius: 0;
+    font-size: 1rem;
+    justify-content: flex-start !important;
+  }
+
+  .nav-links a span {
+    opacity: 1 !important;
+    width: auto !important;
+    overflow: visible !important;
+  }
+
+  .nav-links a:hover {
+    background-color: #f9fafb;
+  }
+
+  /* Ajuste del botón de logout en móvil */
+  .logout-item {
+    margin: 8px 16px;
+    padding: 0;
+  }
+
+  .btn-logout {
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 8px;
+  }
+
+  body {
+    margin-left: 0 !important;
+    margin-top: 60px !important;
+  }
+}
+
+/* --- Media Query para móviles pequeños --- */
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 0.85rem;
+  }
+
+  .logo-icon {
+    font-size: 1.2rem;
+  }
+
+  .nav-links a {
+    padding: 14px 20px !important;
+    font-size: 0.95rem;
   }
 }

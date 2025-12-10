@@ -1,13 +1,24 @@
+/* Paleta de Colores (Cardiología Pediátrica Integral) */
+:root {
+  --color-primary: #007bff; /* Azul Médico Primario */
+  --color-secondary: #ff4757; /* Rojo/Coral Cardiología (Acento) */
+  --color-dark: #2c3e50; /* Azul Oscuro - Texto, Profesionalismo */
+  --color-light-bg: #f5f8fb; /* Fondo muy claro */
+  --color-white: #ffffff;
+  --color-gray-text: #607d8b; /* Gris suave para el cuerpo de texto */
+  --color-light-blue: #e3f2fd; /* Azul muy claro para fondos sutiles */
+}
+
 /* =========================================
-   1. PANTALLA DE CARGA (LOADER)
-   ========================================= */
+    1. PANTALLA DE CARGA (LOADER) - Estilo ECG
+    ========================================= */
 .loader-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: #ffffff;
+  background-color: var(--color-white);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -16,204 +27,288 @@
 }
 
 .medical-pulse {
-  width: 50px;
-  height: 50px;
-  background-color: #007bff;
-  border-radius: 50%;
-  animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  /* Representación de una onda de ECG */
+  width: 100px;
+  height: 2px;
+  background-color: var(--color-secondary); /* Usamos el color de acento */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px var(--color-secondary);
+}
+
+.medical-pulse::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(to right, 
+    transparent 0%, 
+    var(--color-secondary) 50%, 
+    transparent 100%);
+  animation: ecg-wave 1s linear infinite;
 }
 
 .loader-overlay p {
-  margin-top: 15px;
-  color: #007bff;
+  margin-top: 25px;
+  color: var(--color-dark);
   font-weight: 600;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-@keyframes pulse-ring {
-  0% { transform: scale(0.33); opacity: 1; }
-  80%, 100% { transform: scale(2); opacity: 0; }
+@keyframes ecg-wave {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* =========================================
-   2. ESTILOS PRINCIPALES
-   ========================================= */
+    2. ESTILOS PRINCIPALES
+    ========================================= */
 
-/* Forzamos fondo claro para eliminar los fondos oscuros anteriores */
 .home-container {
-  background-color: #f4f7f6; /* Gris muy suave, casi blanco */
+  background-color: var(--color-light-bg);
   min-height: 100vh;
   width: 100%;
   overflow-x: hidden;
 }
 
-/* HERO SECTION */
+/* HERO SECTION - Diseño Moderno Cardiología */
 .hero-section {
-  background: linear-gradient(135deg, #007bff 0%, #00d2ff 100%);
-  color: white;
-  padding: 120px 20px;
-  text-align: center;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  box-shadow: 0 10px 20px rgba(0, 123, 255, 0.15);
+  /* Fondo más profesional: Azul oscuro a azul claro, dando una sensación de profundidad y tecnología */
+  background: linear-gradient(135deg, #004494 0%, #007bff 100%); 
+  color: var(--color-white);
+  padding: 160px 20px 100px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   position: relative;
+  /* Detalle visual sutil de corazón */
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); /* Recorte en la parte inferior para efecto premium */
 }
 
 .hero-content {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 0 auto;
+  padding-left: 50px; 
 }
 
-/* --- CORRECCIÓN DEL TÍTULO --- */
+/* --- TÍTULO --- */
 .hero-content h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
+  font-size: 4.5rem;
+  margin-bottom: 5px;
   line-height: 1.1;
-  font-weight: 800;
-  
-  /* COLOR BLANCO FORZADO */
-  color: #ffffff !important; 
-  
-  /* SOMBRA PARA QUE RESALTE */
-  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
+  font-weight: 900;
+  color: var(--color-white) !important; 
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  letter-spacing: -2px;
 }
 
-.hero-content p {
-  font-size: 1.3rem;
-  margin-bottom: 35px;
-  opacity: 0.95;
-  color: #f0f8ff; /* Blanco ligeramente azulado */
+.hero-specialty {
+    font-size: 1.6rem;
+    margin-bottom: 40px;
+    opacity: 0.95;
+    color: #b3e5ff; /* Color muy claro para mejor contraste */
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
 }
 
 /* BOTONES */
 .hero-buttons {
   display: flex;
-  gap: 20px;
-  justify-content: center;
+  gap: 25px;
+  justify-content: flex-start;
   flex-wrap: wrap;
 }
 
 .btn-hero {
-  padding: 12px 35px;
-  border-radius: 30px;
+  padding: 16px 45px;
+  border-radius: 12px; /* Más cuadrado para un look profesional */
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .btn-hero.primary {
-  background: white;
-  color: #007bff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background: var(--color-secondary); /* Rojo Cardiología para la acción principal */
+  color: var(--color-white);
+  box-shadow: 0 8px 20px rgba(255, 71, 87, 0.5);
 }
 
 .btn-hero.secondary {
-  border: 2px solid white;
-  color: white;
-  background: transparent;
+  border: 2px solid var(--color-white);
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.1); /* Fondo muy sutil */
+  backdrop-filter: blur(2px);
 }
 
-.btn-hero:hover {
+.btn-hero.primary:hover {
+  background: #e03947; 
+  transform: translateY(-5px); /* Efecto más pronunciado */
+  box-shadow: 0 12px 25px rgba(255, 71, 87, 0.7);
+}
+
+.btn-hero.secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
   transform: translateY(-5px);
-  box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* WELCOME SECTION */
 .welcome-section {
-  padding: 80px 20px;
+  padding: 100px 20px;
   text-align: center;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .welcome-section h2 {
-  font-size: 2.2rem;
-  color: #2c3e50; /* Gris oscuro elegante */
-  margin-bottom: 20px;
+  font-size: 3rem;
+  color: var(--color-dark); 
+  margin-bottom: 25px;
+  font-weight: 800;
+  position: relative;
+  display: inline-block;
 }
+
+/* Línea divisoria debajo del título */
+.welcome-section h2::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 5px;
+    background: var(--color-primary);
+    margin: 15px auto 0;
+    border-radius: 3px;
+}
+
 
 .welcome-section p {
-  color: #555;
-  font-size: 1.1rem;
-  line-height: 1.8;
+  color: var(--color-gray-text);
+  font-size: 1.3rem;
+  line-height: 1.7;
 }
 
-/* CARDS DE SERVICIOS */
+/* CARDS DE SERVICIOS - Grid de Diseño Elevado */
 .features-section {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
-  padding: 20px 20px 80px;
-  max-width: 1200px;
+  padding: 20px 50px 100px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
 .feature-card {
-  background: #ffffff;
-  padding: 40px 25px;
-  border-radius: 20px;
+  background: var(--color-white);
+  padding: 40px 30px;
+  border-radius: 15px;
   text-align: center;
-  /* Sombra suave inicial */
-  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-  border: 1px solid #eee;
-  transition: transform 0.3s, box-shadow 0.3s;
+  /* Sombra más enfocada */
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--color-light-bg); /* Borde sutil */
+}
+
+/* Efecto de overlay sutil al hacer hover */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-primary);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.feature-card:hover::before {
+    opacity: 0.05; 
 }
 
 .feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 123, 255, 0.1);
-  border-color: #b3d7ff;
+    transform: translateY(-10px); /* Efecto de levitación más alto */
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+}
+
+.feature-card * {
+    position: relative;
+    z-index: 2; 
 }
 
 .feature-card .icon {
-  font-size: 3rem;
+  font-size: 4rem;
   margin-bottom: 15px;
   display: inline-block;
-  background: #eef7ff;
-  width: 70px;
-  height: 70px;
-  line-height: 70px;
+  /* Icono con color de acento (Rojo Cardiología) */
+  background: var(--color-secondary);
+  color: var(--color-white);
+  width: 80px;
+  height: 80px;
+  line-height: 80px;
   border-radius: 50%;
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+  transition: transform 0.3s, background 0.3s;
+}
+
+.feature-card:hover .icon {
+    transform: scale(1.05) rotate(0deg); 
+    background: var(--color-primary); /* Cambia el icono a Primary al hover */
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
 }
 
 .feature-card h3 {
-  color: #007bff;
+  color: var(--color-dark);
   margin-bottom: 10px;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.feature-card:hover h3 {
+    color: var(--color-secondary); /* Resalta el título con el color de acento */
 }
 
 .feature-card p {
-  color: #666;
+  color: var(--color-gray-text);
+  font-size: 1rem;
 }
 
 /* =========================================
-   3. ANIMACIONES DE ENTRADA
-   ========================================= */
+    3. ANIMACIONES DE ENTRADA (Ajuste de suavidad)
+    ========================================= */
 
 /* Animación de entrada de página */
 .fade-in-page {
-  animation: fadeIn 1s ease-out forwards;
+  animation: fadeIn 1s ease-in-out forwards;
 }
 
-/* Texto del título deslizándose hacia arriba */
+/* Texto del título deslizándose hacia arriba con una curva de velocidad más suave */
 .title-animate {
-  animation: slideUp 0.8s ease-out forwards;
+  animation: slideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
 }
 
 /* Elementos con retraso (delays) */
 .fade-up-delay-1 {
   opacity: 0;
-  animation: slideUp 0.8s ease-out 0.2s forwards;
+  animation: slideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
 }
 .fade-up-delay-2 {
   opacity: 0;
-  animation: slideUp 0.8s ease-out 0.4s forwards;
+  animation: slideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s forwards;
 }
 .fade-up-delay-3 {
   opacity: 0;
-  animation: slideUp 0.8s ease-out 0.6s forwards;
+  animation: slideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s forwards;
 }
 
 /* KEYFRAMES */
@@ -225,7 +320,7 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(40px);
   }
   to {
     opacity: 1;
@@ -234,20 +329,52 @@
 }
 
 /* RESPONSIVE MÓVIL */
+@media (max-width: 900px) {
+    /* Ajuste el recorte para móviles */
+    .hero-section {
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 50% 100%, 0 90%);
+    }
+    .hero-content {
+        padding-left: 20px;
+        text-align: center;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+    .hero-specialty {
+        font-size: 1.4rem;
+    }
+    .features-section {
+        padding: 20px 20px 80px;
+    }
+    .welcome-section h2 {
+        font-size: 2.5rem;
+    }
+}
+
 @media (max-width: 600px) {
   .hero-section {
-    padding: 80px 20px;
-    border-radius: 0 0 30px 30px;
+    padding: 100px 20px 80px;
   }
   .hero-content h1 {
-    font-size: 2.2rem;
+    font-size: 2.8rem;
+    letter-spacing: -1px;
+  }
+  .hero-specialty {
+      font-size: 1.1rem;
   }
   .hero-buttons {
     flex-direction: column;
     width: 100%;
+    gap: 15px;
   }
   .btn-hero {
     width: 100%;
     box-sizing: border-box;
+    font-size: 1rem;
+    padding: 14px 20px;
   }
 }

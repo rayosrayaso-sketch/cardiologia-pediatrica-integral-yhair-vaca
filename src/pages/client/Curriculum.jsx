@@ -58,6 +58,9 @@ export default function Curriculum() {
   return (
     <div className="cv-container fade-in">
       <div className="cv-card">
+        {/* Decoración visual de fondo en el header */}
+        <div className="cv-card-banner"></div>
+
         <header className="cv-header">
           
           {/* FOTO DE PERFIL CON DISEÑO PROFESIONAL */}
@@ -65,59 +68,63 @@ export default function Curriculum() {
             <div className="profile-image-wrapper pop-in">
               <img 
                 src={convertirLinkDrive(cvData.foto)} 
-                alt="Dra. Victoria Calizaya" 
+                alt="Dr. Alexander Yhair Vaca" 
                 className="profile-image"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
                   e.target.onerror = null; 
-                  e.target.src="https://placehold.co/150?text=Dra.+Victoria";
+                  e.target.src="https://placehold.co/150?text=Dr.+Alexander";
                 }}
               />
             </div>
           )}
 
           <div className="header-text slide-up">
-            <h1>Dra. Victoria Calizaya</h1>
-            <p className="subtitle">Médico Cirujano - Medicina General</p>
+            <h1>Dr. Alexander Yhair Vaca Saldaña</h1>
+            <p className="subtitle">Especialista en Cardiología Pediátrica Integral</p>
             <div className="divider"></div>
           </div>
         </header>
 
         <div className="cv-body slide-up delay-1">
-          <section className="cv-section">
+          <section className="cv-section bio-section">
             <h3>
-              <span className="icon">👩‍⚕️</span> 
+              <span className="icon-circle">👨‍⚕️</span> 
               Perfil Profesional
             </h3>
-            <p>{cvData.descripcion || "Sin descripción disponible."}</p>
+            <div className="text-content">
+              <p>{cvData.descripcion || "Sin descripción disponible."}</p>
+            </div>
           </section>
 
-          {/* --- NUEVA SECCIÓN: MISIÓN Y VISIÓN --- */}
-          {/* Se renderiza solo si existe misión o visión */}
+          {/* --- SECCIÓN: MISIÓN Y VISIÓN (Diseño de Tarjetas) --- */}
           {(cvData.mision || cvData.vision) && (
             <div className="mision-vision-grid">
               {cvData.mision && (
                 <div className="mv-card mision pop-in delay-2">
-                  <h3>🚀 Misión</h3>
+                  <div className="mv-icon">🚀</div>
+                  <h3>Misión</h3>
                   <p>{cvData.mision}</p>
                 </div>
               )}
               {cvData.vision && (
                 <div className="mv-card vision pop-in delay-3">
-                  <h3>👁️ Visión</h3>
+                  <div className="mv-icon">👁️</div>
+                  <h3>Visión</h3>
                   <p>{cvData.vision}</p>
                 </div>
               )}
             </div>
           )}
-          {/* -------------------------------------- */}
 
-          <section className="cv-section mt-4">
+          <section className="cv-section experience-section mt-4">
             <h3>
-              <span className="icon">🏥</span> 
+              <span className="icon-circle">🏥</span> 
               Experiencia y Logros
             </h3>
-            <p>{cvData.experiencia || "Información pendiente de actualizar."}</p>
+            <div className="text-content">
+              <p>{cvData.experiencia || "Información pendiente de actualizar."}</p>
+            </div>
           </section>
         </div>
 
@@ -129,7 +136,7 @@ export default function Curriculum() {
               rel="noopener noreferrer" 
               className="btn-download-cv"
             >
-              📄 Ver Currículum Vitae Completo
+              <span className="btn-icon">📄</span> Descargar Currículum Vitae
             </a>
           </div>
         )}

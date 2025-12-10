@@ -1,365 +1,393 @@
-/* Variables de Diseño */
+/* =========================================
+   VARIABLES DE DISEÑO (TEMA CARDIOLOGÍA)
+   ========================================= */
 :root {
-  --primary-color: #0ea5e9; /* Azul Médico */
-  --primary-hover: #0284c7;
-  --bg-color: #f8fafc;
+  --primary-blue: #007bff;       /* Azul Médico Principal */
+  --primary-dark: #0056b3;       /* Azul Oscuro Hover */
+  --accent-coral: #ff4757;       /* Rojo/Coral Acento */
+  --bg-admin: #f4f7f6;           /* Fondo general */
   --card-bg: #ffffff;
-  --text-main: #334155;
-  --text-light: #64748b;
-  --danger-color: #ef4444;
-  --success-color: #10b981;
-  --border-color: #e2e8f0;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --text-dark: #2c3e50;
+  --text-gray: #7f8c8d;
+  --border-light: #e0e0e0;
+  --shadow-card: 0 4px 6px rgba(0,0,0,0.04);
+  --shadow-hover: 0 10px 20px rgba(0,0,0,0.08);
   --radius: 12px;
 }
 
-/* Contenedor Principal */
+/* Contenedor Principal (Con corrección de Navbar) */
 .admin-container {
-  padding: 40px 20px;
-  max-width: 900px;
+  padding: 100px 20px 60px; /* Padding-top de 100px clave */
+  max-width: 1100px;
   margin: 0 auto;
-  background-color: var(--bg-color);
+  background-color: var(--bg-admin);
   min-height: 100vh;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: var(--text-main);
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
 }
 
 /* Header */
 .admin-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
 
 .admin-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-main);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--primary-blue);
   margin-bottom: 10px;
 }
 
 .admin-header p {
-  color: var(--text-light);
-  font-size: 1rem;
+  color: var(--text-gray);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-/* Tarjetas Generales (Cards) */
+/* Layout Grid para Formularios */
+.admin-content-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+/* Estilos de Tarjeta */
 .card-admin {
   background: var(--card-bg);
   border-radius: var(--radius);
-  box-shadow: var(--shadow-md);
-  margin-bottom: 30px;
+  box-shadow: var(--shadow-card);
   overflow: hidden;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(0,0,0,0.03);
+  transition: transform 0.3s ease;
+}
+
+.card-admin:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
 }
 
 .card-header {
-  background-color: #f1f5f9;
-  padding: 15px 25px;
-  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 20px 25px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-icon {
+  background: #e3f2fd;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1.2rem;
 }
 
 .card-header h2 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   margin: 0;
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  color: var(--text-dark);
+  font-weight: 700;
 }
 
 .card-body {
   padding: 25px;
 }
 
-/* Formulario Horario */
+/* --- SECCIÓN HORARIO --- */
 .form-horario {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
   align-items: flex-end;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .input-group {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex: 1;
-  min-width: 150px;
 }
 
 .input-group label {
   font-weight: 600;
-  font-size: 0.9rem;
-  color: var(--text-main);
+  font-size: 0.85rem;
+  color: var(--text-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.input-group input[type="time"] {
-  padding: 10px 15px;
-  border: 1px solid var(--border-color);
+.input-time {
+  padding: 12px;
+  border: 1px solid var(--border-light);
   border-radius: 8px;
   font-size: 1rem;
-  background: #fff;
-  color: var(--text-main);
+  background: #fdfdfd;
+  color: var(--text-dark);
   outline: none;
-  transition: border-color 0.2s;
-}
-
-.input-group input[type="time"]:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
-}
-
-/* Botones Generales */
-button {
-  font-weight: 600;
-  letter-spacing: 0.5px;
   transition: all 0.2s;
 }
 
+.input-time:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.seperator {
+  padding-bottom: 12px;
+  font-weight: bold;
+  color: var(--text-gray);
+}
+
 .btn-save {
-  background: var(--primary-color);
+  background: var(--primary-blue);
   color: white;
   border: none;
-  padding: 12px 25px;
+  padding: 14px 25px;
   border-radius: 8px;
   cursor: pointer;
-  height: fit-content;
+  font-weight: 600;
+  transition: background 0.2s;
+  width: 100%;
 }
 
 .btn-save:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
+  background: var(--primary-dark);
 }
 
-/* Formulario Agregar Servicio */
+/* --- SECCIÓN AGREGAR SERVICIO --- */
 .form-servicio {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
-.form-servicio input, 
-.form-servicio select {
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input-text, .input-number, .input-select {
+  width: 100%;
   padding: 12px 15px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-light);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
-  transition: border-color 0.2s;
+  background: #fdfdfd;
+  box-sizing: border-box;
+  transition: all 0.2s;
 }
 
-.form-servicio input:focus,
-.form-servicio select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+.input-text:focus, .input-number:focus, .input-select:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+  background: #fff;
 }
 
 .row-inputs {
   display: flex;
-  gap: 15px;
+  gap: 20px;
 }
 
-.row-inputs input, .row-inputs select {
+.form-group.half {
   flex: 1;
 }
 
 .btn-add {
-  background: var(--success-color);
+  background: var(--accent-coral); /* Botón de acción destacado */
   color: white;
   border: none;
-  padding: 12px;
+  padding: 14px;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: 700;
   margin-top: 10px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 10px rgba(255, 71, 87, 0.2);
 }
 
 .btn-add:hover {
-  background-color: #059669;
+  background: #e03947;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 71, 87, 0.3);
 }
 
-/* Lista de Servicios */
-.lista-servicios h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  padding-left: 5px;
-  border-left: 4px solid var(--primary-color);
-  line-height: 1;
+/* --- LISTA DE SERVICIOS --- */
+.lista-servicios-section {
+  border-top: 1px solid var(--border-light);
+  padding-top: 40px;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  color: var(--text-dark);
+  margin-bottom: 30px;
+  border-left: 5px solid var(--primary-blue);
+  padding-left: 15px;
 }
 
 .grid-servicios {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
 }
 
 .servicio-item {
-  background: white;
-  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
   border-radius: var(--radius);
   padding: 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-shadow: var(--shadow-sm);
+  align-items: center;
+  gap: 15px;
+  box-shadow: var(--shadow-card);
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .servicio-item:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-3px);
-  border-color: var(--primary-color);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+  border-color: var(--primary-blue);
+}
+
+.servicio-icon-wrapper {
+  background: #e3f2fd;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.servicio-info {
+  flex-grow: 1;
 }
 
 .servicio-info h3 {
-  margin: 0 0 15px 0;
+  margin: 0 0 5px 0;
   font-size: 1.1rem;
-  color: var(--text-main);
+  color: var(--text-dark);
   font-weight: 700;
 }
 
 .servicio-detalles {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 8px;
 }
 
 .tag-precio {
-  background-color: #ecfdf5;
-  color: #059669;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.9rem;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-weight: 600;
 }
 
 .tag-duracion {
-  background-color: #f0f9ff;
-  color: #0284c7;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.9rem;
+  background-color: #f1f3f5;
+  color: var(--primary-dark);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
   font-weight: 500;
 }
 
 .btn-delete {
-  background: white;
-  color: var(--danger-color);
-  border: 1px solid var(--danger-color);
+  background: transparent;
+  color: var(--text-gray);
+  border: none;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: 50%;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  transition: all 0.2s;
 }
 
 .btn-delete:hover {
-  background: var(--danger-color);
-  color: white;
+  background: #ffebee;
+  color: var(--accent-coral);
+  transform: rotate(15deg);
 }
 
-/* Loading State */
+/* --- LOADING & EMPTY STATES --- */
 .loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 50vh;
-  color: var(--text-light);
-  gap: 15px;
+  height: 80vh;
+  color: var(--primary-blue);
+  background-color: var(--bg-admin);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #e2e8f0;
-  border-top: 4px solid var(--primary-color);
+  width: 45px;
+  height: 45px;
+  border: 4px solid #e3f2fd;
+  border-top: 4px solid var(--primary-blue);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  margin-bottom: 20px;
 }
 
 .empty-state {
   text-align: center;
-  padding: 40px;
-  color: var(--text-light);
+  padding: 50px;
+  color: var(--text-gray);
   background: #fff;
   border-radius: var(--radius);
-  border: 1px dashed var(--border-color);
+  border: 2px dashed var(--border-light);
 }
 
-/* =========================================
-   ANIMACIONES AGREGADAS
-   ========================================= */
-
-/* Animación de entrada hacia arriba (Fade In Up) */
-.fade-in-up {
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  opacity: 0.5;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* --- ANIMACIONES --- */
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* Animación de entrada hacia abajo (Fade In Down - para el header) */
-.fade-in-down {
-  opacity: 0;
-  animation: fadeInDown 0.6s ease-out forwards;
-}
+.fade-in { animation: fadeIn 0.8s ease-out forwards; }
+.slide-up { opacity: 0; animation: slideUp 0.6s ease-out forwards; }
+.pop-in { opacity: 0; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
 
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Animación de escala (para items nuevos) */
-.scale-in {
-  animation: scaleIn 0.4s ease-out forwards;
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Clases de utilidad para retrasos (stagger effect) */
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
 
-/* Responsivo */
-@media (max-width: 600px) {
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+  .admin-container {
+    padding-top: 110px;
+  }
   .form-horario {
     flex-direction: column;
     align-items: stretch;
   }
+  .seperator {
+    display: none;
+  }
   .row-inputs {
     flex-direction: column;
-  }
-  .btn-save, .btn-add {
-    width: 100%;
+    gap: 15px;
   }
 }

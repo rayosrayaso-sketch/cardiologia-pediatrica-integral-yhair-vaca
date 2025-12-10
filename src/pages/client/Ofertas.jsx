@@ -96,7 +96,7 @@ export default function Ofertas() {
         icon: 'warning', 
         title: 'Inicia sesión', 
         text: 'Debes estar registrado para agendar.',
-        confirmButtonColor: '#0ea5e9'
+        confirmButtonColor: '#007bff'
       }).then(() => navigate("/login"));
     }
 
@@ -105,7 +105,7 @@ export default function Ofertas() {
         icon: 'warning', 
         title: 'Faltan datos', 
         text: 'Selecciona fecha y hora.',
-        confirmButtonColor: '#f59e0b'
+        confirmButtonColor: '#ff4757'
       });
     }
 
@@ -116,7 +116,7 @@ export default function Ofertas() {
           icon: 'error', 
           title: 'Horario no disponible', 
           text: `Atención de ${horario.entrada} a ${horario.salida}.`,
-          confirmButtonColor: '#ef4444'
+          confirmButtonColor: '#dc3545'
         });
       }
     }
@@ -134,8 +134,8 @@ export default function Ofertas() {
       showCancelButton: true,
       confirmButtonText: 'Sí, agendar',
       cancelButtonText: 'Cancelar',
-      confirmButtonColor: '#10b981',
-      cancelButtonColor: '#94a3b8'
+      confirmButtonColor: '#007bff',
+      cancelButtonColor: '#6c757d'
     });
 
     if (!result.isConfirmed) return;
@@ -277,7 +277,7 @@ export default function Ofertas() {
         ))}
       </div>
 
-      {/* --- LISTA DE CITAS DEL USUARIO (Corregida) --- */}
+      {/* --- LISTA DE CITAS DEL USUARIO --- */}
       {user && (
         <div className="mis-citas-section slide-up delay-2">
           <div className="section-header">
