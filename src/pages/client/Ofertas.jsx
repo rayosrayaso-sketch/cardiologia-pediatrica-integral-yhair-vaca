@@ -27,11 +27,11 @@ export default function Ofertas() {
   const [misCitas, setMisCitas] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  const formRef = useRef(null); // Referencia para scroll automático al formulario
+  const formRef = useRef(null); 
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // 1. Cargar Servicios y Horario (Solo se ejecuta una vez)
+  // 1. Cargar Servicios y Horario (Solo una vez)
   useEffect(() => {
     const cargarDatos = async () => {
       try {
@@ -49,14 +49,20 @@ export default function Ofertas() {
     cargarDatos();
   }, []);
 
-  // 2. ESCUCHAR CITAS DEL USUARIO EN TIEMPO REAL
+  // 2. ESCUCHAR CITAS DEL USUARIO EN TIEMPO REAL (CORREGIDO)
   useEffect(() => {
-    if (!user) return;
+    // Si no hay usuario, limpiamos las citas y no hacemos consulta
+    if (!user) {
+      setMisCitas([]);
+      return;
+    }
 
+    // IMPORTANTE: Esta consulta requiere un Índice Compuesto en Firestore
+    // Si no ves datos, abre la consola (F12) y busca el enlace de error de Firebase.
     const q = query(
       collection(db, "citas"), 
-      where("userId", "==", user.uid),
-      orderBy("creadoEn", "desc")
+      where("userId", "==", user.uid), // FILTRO EXACTO POR USUARIO
+      orderBy("creadoEn", "desc")      // ORDENAMIENTO POR FECHA
     );
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -64,12 +70,16 @@ export default function Ofertas() {
       setMisCitas(citasData);
     }, (error) => {
       console.error("⚠️ Error obteniendo citas:", error);
+      // Si el error es 'failed-precondition', es falta de índice.
+      if (error.code === 'failed-precondition') {
+          console.warn("FALTA ÍNDICE: Copia el link de arriba en tu navegador para crearlo.");
+      }
     });
 
     return () => unsubscribe();
   }, [user]);
 
-  // Función auxiliar para seleccionar servicio y hacer scroll
+  // Función auxiliar para seleccionar servicio
   const seleccionarServicio = (servicio) => {
     setCita({ ...cita, servicioId: servicio.id, servicioNombre: servicio.nombre });
     setTimeout(() => {
@@ -99,6 +109,7 @@ export default function Ofertas() {
       });
     }
 
+    // Validación de horario
     if (horario) {
       if (cita.hora < horario.entrada || cita.hora > horario.salida) {
         return Swal.fire({ 
@@ -133,8 +144,8 @@ export default function Ofertas() {
 
     try {
       await addDoc(collection(db, "citas"), {
-        userId: user.uid,
-        userEmail: user.email,
+        userId: user.uid,        // ID ÚNICO DEL USUARIO (Clave para el filtro)
+        userEmail: user.email,   // Correo para referencia visual
         servicio: cita.servicioNombre,
         fecha: cita.fecha,
         hora: cita.hora,
@@ -154,14 +165,14 @@ export default function Ofertas() {
       setCita({ fecha: "", hora: "", servicioId: "", servicioNombre: "" }); 
 
     } catch (error) {
-      console.error(error);
+      console.error("Error al registrar:", error);
       Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo registrar la cita.' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Etiquetas y colores para el estado
+  // Helpers visuales
   const getStatusLabel = (estado) => {
     if (estado === 'confirmada') return 'Confirmada';
     if (estado === 'cancelada') return 'Cancelada';
@@ -188,10 +199,9 @@ export default function Ofertas() {
         <p>Selecciona un servicio profesional y reserva tu horario ideal.</p>
       </header>
 
-      {/* Punto de anclaje para el scroll */}
       <div ref={formRef}></div>
 
-      {/* FORMULARIO FLOTANTE (ESTILO NUEVO) */}
+      {/* FORMULARIO FLOTANTE */}
       {cita.servicioId && (
         <div className="reserva-wrapper pop-in">
           <div className="reserva-card">
@@ -245,7 +255,6 @@ export default function Ofertas() {
             </div>
             <div className="card-content">
               <h3>{servicio.nombre}</h3>
-              
               <div className="card-details">
                 <div className="detail-item">
                   <span className="label">Precio</span>
@@ -256,7 +265,6 @@ export default function Ofertas() {
                   <span className="value duracion">{servicio.duracion} min</span>
                 </div>
               </div>
-
               <button 
                 className="btn-agendar"
                 onClick={() => seleccionarServicio(servicio)}
@@ -269,7 +277,7 @@ export default function Ofertas() {
         ))}
       </div>
 
-      {/* --- LISTA DE CITAS DEL USUARIO --- */}
+      {/* --- LISTA DE CITAS DEL USUARIO (Corregida) --- */}
       {user && (
         <div className="mis-citas-section slide-up delay-2">
           <div className="section-header">
@@ -279,14 +287,13 @@ export default function Ofertas() {
           {misCitas.length === 0 ? (
             <div className="no-citas">
               <div className="icon-empty">📅</div>
-              <p>No tienes citas programadas.</p>
-              <small>Tus reservas aparecerán aquí para que lleves el control.</small>
+              <p>No tienes citas programadas o no se pudieron cargar.</p>
+              <small>Si acabas de registrar una y no aparece, verifica tu conexión.</small>
             </div>
           ) : (
             <div className="citas-user-grid">
               {misCitas.map(c => (
                 <div key={c.id} className={`cita-user-card status-${c.estado}`}>
-                  {/* Encabezado de la tarjeta */}
                   <div className="cita-header-card">
                     <span className="cita-fecha">📅 {c.fecha}</span>
                     <span className={`status-badge badge-${c.estado}`}>
@@ -294,21 +301,18 @@ export default function Ofertas() {
                     </span>
                   </div>
 
-                  {/* Cuerpo de la tarjeta */}
                   <div className="cita-body-card">
                     <h4 className="cita-servicio-name">{c.servicio}</h4>
                     <p className="cita-hora">Horario: <strong>{c.hora}</strong></p>
                   </div>
                   
-                  {/* Mensaje específico para PENDIENTE */}
                   {c.estado === 'pendiente' && (
                     <div className="cita-footer-pendiente">
                       <div className="pulse-dot"></div>
-                      <span>Esperando la respuesta del admin en espera</span>
+                      <span>En espera de confirmación</span>
                     </div>
                   )}
                   
-                  {/* Mensaje para CONFIRMADA */}
                   {c.estado === 'confirmada' && (
                     <div className="cita-footer-confirmada">
                       <span>¡Todo listo! Te esperamos.</span>
