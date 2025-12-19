@@ -12,69 +12,118 @@ export default function Contactos() {
       try {
         const docSnap = await getDoc(doc(db, "configuracion", "contacto"));
         if (docSnap.exists()) setContacto(docSnap.data());
-      } catch (error) { console.error(error); } 
-      finally { setLoading(false); }
+      } catch (error) {
+        console.error("Error al cargar contactos:", error);
+      } finally {
+        setLoading(false);
+      }
     };
     fetchContacto();
   }, []);
 
-  if (loading) return <div className="loading-contactos"><div className="spinner"></div><p>Cargando información...</p></div>;
+  if (loading) {
+    return (
+      <div className="loading-contactos-screen">
+        <div className="medical-spinner"></div>
+        <p>Cargando información de contacto...</p>
+      </div>
+    );
+  }
 
-  if (!contacto) return <div className="contactos-container"><p>Información de contacto no disponible.</p></div>;
+  if (!contacto) {
+    return (
+      <div className="contactos-error-view">
+        <p>⚠️ La información de contacto no está disponible actualmente.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="contactos-container fade-in">
-      <header className="contactos-header slide-up">
-        <h1>Contáctanos</h1>
-        <p>Estamos aquí para atenderte. Elige el medio que prefieras.</p>
+    <div className="contactos-page-wrapper fade-in">
+      <header className="contactos-hero">
+        <div className="hero-shape"></div>
+        <span className="contact-badge">Atención Médica Integral</span>
+        <h1>Canales de Atención</h1>
+        <p>Estamos comprometidos con la salud cardiovascular de tus hijos. Elige tu medio de contacto preferido.</p>
       </header>
 
-      <div className="contactos-grid slide-up delay-1">
-        {/* Tarjeta WhatsApp */}
-        <div className="contacto-card whatsapp">
-          <div className="icon">💬</div>
-          <h3>WhatsApp</h3>
-          <p>Escríbenos para consultas rápidas.</p>
+      <div className="contactos-main-grid">
+        {/* Card WhatsApp */}
+        <div className="contact-card-premium ws-card slide-up">
+          <div className="card-icon-wrapper">
+            <span className="card-icon">💬</span>
+          </div>
+          <h3>WhatsApp Directo</h3>
+          <p>Ideal para consultas rápidas y agendar citas de forma inmediata.</p>
           {contacto.whatsapp && (
-            <a href={`https://wa.me/${contacto.whatsapp}`} target="_blank" rel="noopener noreferrer" className="btn-contacto btn-ws">
-              Enviar Mensaje
+            <a 
+              href={`https://wa.me/${contacto.whatsapp}`} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="btn-action-premium ws-btn"
+            >
+              Chatear ahora
             </a>
           )}
         </div>
 
-        {/* Tarjeta Teléfono */}
-        <div className="contacto-card telefono">
-          <div className="icon">📞</div>
-          <h3>Llámanos</h3>
-          <p>Atención directa y emergencias.</p>
-          <p className="dato-contacto">{contacto.telefono || "No disponible"}</p>
+        {/* Card Teléfono */}
+        <div className="contact-card-premium phone-card slide-up delay-1">
+          <div className="card-icon-wrapper">
+            <span className="card-icon">📞</span>
+          </div>
+          <h3>Llamada Directa</h3>
+          <p>Atención personalizada para emergencias y seguimiento médico.</p>
+          <span className="contact-data-highlight">{contacto.telefono || "No disponible"}</span>
         </div>
 
-        {/* Tarjeta Email */}
-        <div className="contacto-card email">
-          <div className="icon">✉️</div>
+        {/* Card Email */}
+        <div className="contact-card-premium email-card slide-up delay-2">
+          <div className="card-icon-wrapper">
+            <span className="card-icon">✉️</span>
+          </div>
           <h3>Correo Electrónico</h3>
-          <p>Envíanos tus documentos o dudas.</p>
-          <a href={`mailto:${contacto.email}`} className="dato-contacto link">{contacto.email || "No disponible"}</a>
+          <p>Envíanos estudios previos, resultados o dudas detalladas.</p>
+          <a href={`mailto:${contacto.email}`} className="contact-link-highlight">
+            {contacto.email || "No disponible"}
+          </a>
         </div>
 
-        {/* Tarjeta Horario */}
-        <div className="contacto-card horario">
-          <div className="icon">🕒</div>
-          <h3>Horario de Atención</h3>
-          <p className="dato-contacto">{contacto.horarioAtencion || "Consultar"}</p>
+        {/* Card Horario */}
+        <div className="contact-card-premium clock-card slide-up delay-3">
+          <div className="card-icon-wrapper">
+            <span className="card-icon">🕒</span>
+          </div>
+          <h3>Horario de Consulta</h3>
+          <p>Organiza tu visita dentro de nuestro horario de atención.</p>
+          <span className="contact-data-highlight">{contacto.horarioAtencion || "Consultar disponibilidad"}</span>
         </div>
       </div>
 
-      {/* Redes Sociales */}
-      <section className="sociales-section slide-up delay-2">
-        <h2>Síguenos en Redes Sociales</h2>
-        <div className="sociales-icons">
-          {contacto.facebook && <a href={contacto.facebook} target="_blank" rel="noopener noreferrer" className="social-icon fb">Facebook</a>}
-          {contacto.instagram && <a href={contacto.instagram} target="_blank" rel="noopener noreferrer" className="social-icon ig">Instagram</a>}
-          {contacto.tiktok && <a href={contacto.tiktok} target="_blank" rel="noopener noreferrer" className="social-icon tk">TikTok</a>}
+      {/* Footer Redes Sociales */}
+      <footer className="social-footer-section slide-up delay-4">
+        <div className="social-content">
+          <h2>Nuestra Comunidad Digital</h2>
+          <p>Mantente informado sobre consejos de salud cardiovascular pediátrica.</p>
+          <div className="social-buttons-grid">
+            {contacto.facebook && (
+              <a href={contacto.facebook} target="_blank" rel="noopener noreferrer" className="social-btn fb-style">
+                <span className="s-icon">📘</span> Facebook
+              </a>
+            )}
+            {contacto.instagram && (
+              <a href={contacto.instagram} target="_blank" rel="noopener noreferrer" className="social-btn ig-style">
+                <span className="s-icon">📸</span> Instagram
+              </a>
+            )}
+            {contacto.tiktok && (
+              <a href={contacto.tiktok} target="_blank" rel="noopener noreferrer" className="social-btn tk-style">
+                <span className="s-icon">🎵</span> TikTok
+              </a>
+            )}
+          </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }

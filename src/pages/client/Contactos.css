@@ -1,93 +1,236 @@
-.contactos-container {
-  padding: 60px 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-  text-align: center;
-  min-height: 80vh;
+:root {
+  --color-primary: #007bff;
+  --color-whatsapp: #25d366;
+  --color-email: #ea4335;
+  --color-phone: #0062cc;
+  --color-text-main: #1e293b;
+  --color-text-soft: #64748b;
+  --color-bg-light: #f8fafc;
+  --shadow-premium: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.contactos-header h1 {
-  color: #007bff;
-  font-size: 2.8rem;
+.contactos-page-wrapper {
+  background-color: var(--color-bg-light);
+  min-height: 100vh;
+  padding: 100px 5% 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- HERO SECTION --- */
+.contactos-hero {
+  text-align: center;
+  max-width: 800px;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.contact-badge {
+  background: rgba(0, 123, 255, 0.1);
+  color: var(--color-primary);
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.contactos-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.8rem);
+  color: var(--color-text-main);
+  margin: 20px 0;
+  font-weight: 900;
+}
+
+.contactos-hero p {
+  color: var(--color-text-soft);
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+/* --- GRID DE TARJETAS --- */
+.contactos-main-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 1300px;
+  margin-bottom: 80px;
+}
+
+.contact-card-premium {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-premium);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid rgba(0,0,0,0.02);
+}
+
+.contact-card-premium:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 30px 40px -10px rgba(0,0,0,0.1);
+}
+
+.card-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: var(--color-bg-light);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: 25px;
+  transition: all 0.3s;
+}
+
+.ws-card:hover .card-icon-wrapper { background: var(--color-whatsapp); transform: rotate(10deg); }
+.phone-card:hover .card-icon-wrapper { background: var(--color-phone); transform: rotate(10deg); }
+.email-card:hover .card-icon-wrapper { background: var(--color-email); transform: rotate(10deg); }
+.clock-card:hover .card-icon-wrapper { background: #ffc107; transform: rotate(10deg); }
+
+.contact-card-premium:hover .card-icon {
+  filter: brightness(0) invert(1);
+}
+
+.contact-card-premium h3 {
+  color: var(--color-text-main);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.contact-card-premium p {
+  color: var(--color-text-soft);
+  margin-bottom: 25px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* --- HIGHLIGHT DATA --- */
+.contact-data-highlight {
+  font-weight: 800;
+  color: var(--color-text-main);
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  background: #f1f5f9;
+  border-radius: 12px;
+}
+
+.contact-link-highlight {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1.1rem;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.contact-link-highlight:hover {
+  border-bottom-color: var(--color-primary);
+}
+
+/* --- BOTONES --- */
+.btn-action-premium {
+  padding: 15px 35px;
+  border-radius: 50px;
+  color: white;
+  text-decoration: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  transition: 0.3s;
+  width: 100%;
+}
+
+.ws-btn {
+  background: var(--color-whatsapp);
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+}
+
+.ws-btn:hover {
+  background: #1ebc57;
+  box-shadow: 0 15px 25px rgba(37, 211, 102, 0.3);
+}
+
+/* --- REDES SOCIALES --- */
+.social-footer-section {
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  padding: 50px;
+  border-radius: 30px;
+  text-align: center;
+  box-shadow: var(--shadow-premium);
+}
+
+.social-footer-section h2 {
+  font-size: 2rem;
+  color: var(--color-text-main);
   margin-bottom: 10px;
 }
 
-.contactos-header p {
-  color: #666;
-  font-size: 1.2rem;
-  margin-bottom: 50px;
+.social-buttons-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 30px;
 }
 
-.contactos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  margin-bottom: 60px;
-}
-
-.contacto-card {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-  transition: transform 0.3s;
-  border-top: 5px solid #ccc;
-}
-
-.contacto-card:hover { transform: translateY(-10px); }
-
-.contacto-card.whatsapp { border-color: #25D366; }
-.contacto-card.telefono { border-color: #007bff; }
-.contacto-card.email { border-color: #EA4335; }
-.contacto-card.horario { border-color: #FFC107; }
-
-.contacto-card .icon { font-size: 3rem; margin-bottom: 15px; }
-.contacto-card h3 { color: #333; margin-bottom: 10px; }
-.contacto-card p { color: #666; font-size: 0.95rem; }
-
-.dato-contacto {
-  font-weight: bold;
-  color: #333;
-  font-size: 1.1rem;
-  display: block;
-  margin-top: 10px;
-}
-
-.btn-contacto {
-  display: inline-block;
-  margin-top: 15px;
-  padding: 10px 20px;
-  border-radius: 50px;
-  text-decoration: none;
-  font-weight: bold;
-  color: white;
-}
-.btn-ws { background-color: #25D366; }
-.btn-ws:hover { background-color: #1ebc57; }
-
-/* Redes Sociales */
-.sociales-section h2 { color: #333; margin-bottom: 20px; }
-.sociales-icons { display: flex; justify-content: center; gap: 20px; }
-.social-icon {
-  padding: 10px 20px;
-  border-radius: 8px;
+.social-btn {
+  padding: 12px 30px;
+  border-radius: 12px;
   color: white;
   text-decoration: none;
-  font-weight: bold;
-  transition: transform 0.2s;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
 }
-.social-icon:hover { transform: scale(1.1); }
-.fb { background: #1877F2; }
-.ig { background: #E4405F; }
-.tk { background: #000000; }
 
-/* Animaciones */
-.fade-in { animation: fadeIn 0.8s ease-out forwards; }
-.slide-up { animation: slideUp 0.8s ease-out forwards; opacity: 0; }
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
+.social-btn:hover { transform: scale(1.05); }
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.fb-style { background: #1877f2; }
+.ig-style { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); }
+.tk-style { background: #000; }
 
-.loading-contactos { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; color: #007bff; }
+/* --- RESPONSIVIDAD --- */
+@media (max-width: 768px) {
+  .contactos-page-wrapper { padding-top: 80px; }
+  .contactos-hero h1 { font-size: 2.2rem; }
+  .social-footer-section { padding: 30px 20px; }
+  .social-btn { width: 100%; justify-content: center; }
+}
+
+/* --- ANIMACIONES --- */
+.slide-up { animation: slideUpEffect 0.8s ease-out forwards; opacity: 0; }
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+.delay-4 { animation-delay: 0.6s; }
+
+@keyframes slideUpEffect {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.medical-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
